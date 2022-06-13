@@ -2,52 +2,34 @@
 
 ## Background
 
-* You are on the Advisory Services Team of a financial consultancy. One of your clients, a prominent investment bank, is interested in offering a new cryptocurrency investment portfolio for its customers. The company, however, is lost in the vast universe of cryptocurrencies. They’ve asked you to create a report that includes what cryptocurrencies are on the trading market and determine whether they can be grouped to create a classification system for this new investment.
-
-* You have been handed raw data, so you will first need to process it to fit the machine learning models. Since there is no known classification system, you will need to use unsupervised learning. You will use several clustering algorithms to explore whether the cryptocurrencies can be grouped together with other similar cryptocurrencies. You will use data visualization to share your findings with the investment bank.
-
-## Instructions
+* One of the prominent investment bank, is interested in offering a new cryptocurrency investment portfolio for its customers. The company, however, is lost in the vast universe of cryptocurrencies. in this project, we were assigned to create a report that includes what cryptocurrencies are on the trading market and determine whether they can be grouped to create a classification system for this new investment.
 
 ### Data Preparation
 
-* Read `crypto_data.csv` into Pandas. The dataset was obtained from [CryptoCompare](https://min-api.cryptocompare.com/data/all/coinlist).
+* The dataset was obtained from [CryptoCompare](https://min-api.cryptocompare.com/data/all/coinlist).
 
-* Discard all cryptocurrencies that are not being traded. In other words, filter for currencies that are currently being traded. Once you have done this, drop the `IsTrading` column from the dataframe.
+* Data pre-processing was performed to fit the machine learning models.
 
-* Remove all rows that have at least one null value.
-
-* Filter for cryptocurrencies that have been mined. That is, the total coins mined should be greater than zero.
-
-* In order for your dataset to be comprehensible to a machine learning algorithm, its data should be numeric. Since the coin names do not contribute to the analysis of the data, delete the `CoinName` from the original dataframe.
-
-* Your next step in data preparation is to convert the remaining features with text values, `Algorithm` and `ProofType`, into numerical data. To accomplish this task, use Pandas to create dummy variables. Examine the number of rows and columns of your dataset now. How did they change?
-
-* Standardize your dataset so that columns that contain larger values do not unduly influence the outcome.
+* Unsupervised machine learning algorithm was used, since there is no known classification system. Several clustering algorithms were explored to determine whether the cryptocurrencies can be grouped together with other similar cryptocurrencies.
 
 ### Dimensionality Reduction
 
-* Creating dummy variables above dramatically increased the number of features in your dataset. Perform dimensionality reduction with PCA. Rather than specify the number of principal components when you instantiate the PCA model, it is possible to state the desired **explained variance**. For example, say that a dataset has 100 features. Using `PCA(n_components=0.99)` creates a model that will preserve approximately 99% of the explained variance, whether that means reducing the dataset to 80 principal components or 3. For this project, preserve 90% of the explained variance in dimensionality reduction. How did the number of the features change?
+* Performed dimensionality reduction with PCA. Rather than specifying the number of principal components when the PCA model was instantiated , 90% of the **explained variance** was preserved for this project. 
 
-* Next, further reduce the dataset dimensions with t-SNE and visually inspect the results. In order to accomplish this task, run t-SNE on the principal components: the output of the PCA transformation. Then create a scatter plot of the t-SNE output. Observe whether there are distinct clusters or not.
+* Further reduced the dataset dimensions with t-SNE and visually inspected the results. 
 
 ### Cluster Analysis with k-Means
 
-* Create an elbow plot to identify the best number of clusters. Use a for-loop to determine the inertia for each `k` between 1 through 10. Determine, if possible, where the elbow of the plot is, and at which value of `k` it appears.
+* An elbow plot was created to identify the best number of clusters. A for-loop was used to determine the inertia for each `k` between 1 through 10. 
 
-### Recommendation
+## Findings
 
-* Based on your findings, make a brief (1-2 sentences) recommendation to your clients. Can the cryptocurrencies be clustered together? If so, into how many clusters? 
+* The number of features went down from 98 to 74, which is expected because using PCA(n_components=0.9) creates a model that will preserve approximately 90% of the explained variance.
 
-## Rubric
+![tsne_plot](https://user-images.githubusercontent.com/95401250/173304280-652269ee-9c02-4080-9d2c-5c8dc7b4aad3.png)
 
-[Unit 20 - Unsupervised Machine Learning Homework Rubric - Cryptocurrency Clusters](https://docs.google.com/document/d/1zhiC8-PtfMknDxYHagsTukryQAJSdXFRWa-aK3W28Vg/edit?usp=sharing)
+* From the scatter plot it looks like there could be 3-4 clusters and some random points which do not fit into any of the clusters.
 
-- - -
+![kmeans_elbowplot](https://user-images.githubusercontent.com/95401250/173304258-c34c6484-e729-4245-bd45-267d87de82e5.png)
 
-## References
-
-Crypto Coin Comparison Ltd. (2020) Coin market capitalization lists of crypto currencies and prices. Retrieved from [https://www.cryptocompare.com/coins/list/all/USD/1](https://www.cryptocompare.com/coins/list/all/USD/1)
-
-- - -
-
-© 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
+The results of the generated curve signify that there is no distinct elbow ie. the curve does not flatten. No elbow does not mean that there are no clusters in the data; No elbow means that the algorithm used cannot separate the clusters; The further options are to tune the algorithm or use a different algorithm to cluster the cryptocurrency data or perform more data pre-processing.
